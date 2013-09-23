@@ -55,31 +55,35 @@ public class FenceController : MonoBehaviour {
 			fenceSectionController.RenderFenceSection(new Vector3(0,0,0),points[i+1]-points[i]);
 		}*/
 		
-		for(var i=0; i< points.Count;i++) {
+		for(var i=0; i< points.Count-1;i++) {
 		
 			Vector3 fromPoint = points[i];
 			Vector3 toPoint = points[i+1];
 			
 			float distanceFromLastPoint = System.Math.Abs((fromPoint - toPoint).magnitude);
+			
+			if(distanceFromLastPoint>0){
 				
-			Vector3 directionUnitVector = (fromPoint - toPoint).normalized;
-	
-			Vector3 midPoint = (distanceFromLastPoint/2) * directionUnitVector;
-			
-			Vector3 fenceSectionPosition = this.transform.position + fromPoint - midPoint ;//- midPoint;
-			Vector3 right = new Vector3(1,0,0);
+				Vector3 directionUnitVector = (fromPoint - toPoint).normalized;
 		
-			float angle = Vector3.Angle(right, directionUnitVector);
-			Vector3 cross = Vector3.Cross(right, directionUnitVector);
-			 
-			if (cross.y > 0)
-			    angle = 360 - angle;
+				Vector3 midPoint = (distanceFromLastPoint/2) * directionUnitVector;
+				
+				Vector3 fenceSectionPosition = this.transform.position + fromPoint - midPoint ;//- midPoint;
+				Vector3 right = new Vector3(1,0,0);
 			
-			FenceSectionController fenceSectionController = (FenceSectionController)Instantiate(fenceSectionPrefab,fenceSectionPosition,transform.rotation);
+				float angle = Vector3.Angle(right, directionUnitVector);
+				Vector3 cross = Vector3.Cross(right, directionUnitVector);
+				 
+				if (cross.y > 0)
+				    angle = 360 - angle;
+				
+				FenceSectionController fenceSectionController = (FenceSectionController)Instantiate(fenceSectionPrefab,fenceSectionPosition,transform.rotation);
+				
+				fenceSectionController.transform.Rotate(new Vector3(0,-angle,0));
+				
+				fenceSectionController.RenderFenceSection(new Vector3(-(distanceFromLastPoint/2),0,0),new Vector3((distanceFromLastPoint/2),0,0));
 			
-			fenceSectionController.transform.Rotate(new Vector3(0,-angle,0));
-			
-			fenceSectionController.RenderFenceSection(new Vector3(-(distanceFromLastPoint/2),0,0),new Vector3((distanceFromLastPoint/2),0,0));
+			}
 		}
 		
 		

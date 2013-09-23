@@ -12,7 +12,7 @@ public class FenceSectionController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
-	   
+	  
 		
 	}
 	
@@ -32,8 +32,9 @@ public class FenceSectionController : MonoBehaviour {
 		fenceMeshHelper.BuildSection(meshBuilder,point1,point2,postSeperation,postWidth,postHeight);
 		meshFilter.mesh = meshBuilder.CreateMesh();
 		
-				//float distanceFromLastPoint = System.Math.Abs((point1 - point2).magnitude);
+		float distanceFromLastPoint = System.Math.Abs((point1 - point2).magnitude);
 		
-		//boxCollider.size = new Vector3(
+		boxCollider.size = new Vector3(distanceFromLastPoint,postHeight,postWidth);
+		
 	}
 }

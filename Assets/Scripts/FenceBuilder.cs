@@ -11,6 +11,7 @@ public class FenceBuilder : MonoBehaviour {
 	private MeshBuilder meshBuilder;
 	private FenchMeshHelper fenceMeshHelper;
 	private FenceController fenceInstance;
+	public CollisionMapBuilder collisionMapBuilder;
 
 	// Use this for initialization
 	void Start () {
@@ -52,6 +53,9 @@ public class FenceBuilder : MonoBehaviour {
 		posts.Add(relativePoint);
 	
 		fenceInstance.CompleteFence(posts);
+		
+		collisionMapBuilder.BuildMap();
+		
 		
 	}
 		
