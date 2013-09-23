@@ -28,6 +28,7 @@ public class FenceBuilder : MonoBehaviour {
 		posts = new List<Vector3>();
 		posts.Add(new Vector3(0,0,0));
 		fenceInstance = (FenceController)Instantiate(fencePrefab,point,transform.rotation);
+		fenceInstance.collisionMapBuilder = collisionMapBuilder;
 		//fenceInstance.RenderFence(posts);
 	}
 	
@@ -54,7 +55,7 @@ public class FenceBuilder : MonoBehaviour {
 	
 		fenceInstance.CompleteFence(posts);
 		
-		collisionMapBuilder.BuildMap();
+		
 		
 		
 	}

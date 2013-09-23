@@ -9,6 +9,7 @@ public class FenceController : MonoBehaviour {
 	private FenchMeshHelper fenceMeshHelper;
 	private MeshBuilder meshBuilder;
 	public FenceSectionController fenceSectionPrefab;
+	public ICollisionMapBuilder collisionMapBuilder;
 	
 	
 	// Use this for initialization
@@ -44,17 +45,7 @@ public class FenceController : MonoBehaviour {
 		
 		//this.RenderFence(points);
 		this.SetFenceMesh(new Mesh());
-		//now we need a collider for each of these fence sections
-		//we'll use box colliders
-		
-		/*
-		for(var i=0; i< points.Count;i++) {
-		
-			Vector3 fenceSectionPosition = this.transform.position + points[i];
-			FenceSectionController fenceSectionController = (FenceSectionController)Instantiate(fenceSectionPrefab,fenceSectionPosition,transform.rotation);
-			fenceSectionController.RenderFenceSection(new Vector3(0,0,0),points[i+1]-points[i]);
-		}*/
-		
+
 		for(var i=0; i< points.Count-1;i++) {
 		
 			Vector3 fromPoint = points[i];
@@ -79,10 +70,13 @@ public class FenceController : MonoBehaviour {
 				
 				FenceSectionController fenceSectionController = (FenceSectionController)Instantiate(fenceSectionPrefab,fenceSectionPosition,transform.rotation);
 				
+			
 				fenceSectionController.transform.Rotate(new Vector3(0,-angle,0));
 				
 				fenceSectionController.RenderFenceSection(new Vector3(-(distanceFromLastPoint/2),0,0),new Vector3((distanceFromLastPoint/2),0,0));
 			
+				collisionMapBuilder.AddGameObjectToMap(fenceSectionController.gameObject);
+				//collisionMapBuilder.BuildMap();
 			}
 		}
 		
