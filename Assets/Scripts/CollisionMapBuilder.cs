@@ -32,23 +32,27 @@ public class CollisionMapBuilder : MonoBehaviour, ICollisionMapBuilder {
 	private int textureWidth;
 	
 	public void BuildMap() {
+		//terrainCollider.gameObject
 		collisionTexture = BuildMap(terrainCollider.bounds,1f);
-		terrainGameObject.renderer.material.mainTexture = collisionTexture;
-		terrainGameObject.renderer.material.mainTextureScale = new Vector2 (1,1);
+		terrainCollider.gameObject.renderer.material.mainTexture = collisionTexture;
+		terrainCollider.gameObject.renderer.material.mainTextureScale = new Vector2 (1,1);
 	}
 	
 	public bool IsCollision(Vector3 point){
-	
-		Pixel pixel = ConvertFromWorldSpaceToMapSpace(point);
-		UnityEngine.Color color = collisionTexture.GetPixel(pixel.X,pixel.Y);
-		return color == Color.red;
+		if(collisionTexture) {
+			Pixel pixel = ConvertFromWorldSpaceToMapSpace(new Vector2(point.x,point.z));
+			UnityEngine.Color color = collisionTexture.GetPixel(pixel.X,pixel.Y);
+			return color == Color.red;
+		} else {
+			return false;
+		}
 	}
 	
 	public void AddGameObjectToMap(GameObject gameObject){
 		RasteriseGameObject(gameObject,collisionTexture);
 		collisionTexture.Apply();
-		terrainGameObject.renderer.material.mainTexture = collisionTexture;
-		terrainGameObject.renderer.material.mainTextureScale = new Vector2 (1,1);
+		terrainCollider.gameObject.renderer.material.mainTexture = collisionTexture;
+		terrainCollider.gameObject.renderer.material.mainTextureScale = new Vector2 (1,1);
 	}
 	
 	
@@ -99,12 +103,6 @@ public class CollisionMapBuilder : MonoBehaviour, ICollisionMapBuilder {
 	public Pixel ConvertFromWorldSpaceToMapSpace(Vector2 point) {
 		
 		//first lets change the co-ordinate system
-		
-	//	Vector2 min = new Vector2(WorldBounds.center.x + WorldBounds.extents.x ,WorldBounds.center.z+ WorldBounds.extents.z);
-		//min.Set(min.x + WorldBounds.extents.x ,min.y + WorldBounds.extents.z);
-		
-		
-		
 		
 		Vector2 translatedPoint = point + new Vector2 (WorldBounds.center.x,WorldBounds.center.z); // + new Vector2( WorldBounds.extents.x,  WorldBounds.extents.z) - new Vector2 (WorldBounds.center.x,WorldBounds.center.z);
 		
