@@ -73,41 +73,27 @@ public class ObstacleAvoidingSteeringBehavior : Steering {
 		}
 		
 		return Vector3.zero;
-		
-		//Debug.DrawLine(Vehicle.Position, futurePosition, Color.white);
-		//e
-		/*
-		if(CollisionMapBuilder.IsCollision(futurePosition)){
-			
-			Debug.Log("COLLISION" + futurePosition);
-			
-			Vector3 moveDirection = Vehicle.Velocity.normalized;
-			Vector3 avoidance = Vector3.zero;
-			avoidance =	 OpenSteerUtility.perpendicularComponent(futurePosition, moveDirection);
-	
-			avoidance.Normalize();
-		
-			avoidance += moveDirection * Vehicle.MaxForce * _avoidanceForceFactor;
-			
-			Debug.DrawLine(Vehicle.Position, Vehicle.Position + avoidance, Color.yellow);
 
-			return avoidance;
-		} else {
-			return Vector3.zero;
-		}*/
 	}	
 	
 	private Vector3 CalculateAvoidanceForce(Vector3 futurePosition){ 
 		
 			//Debug.Log("COLLISION" + futurePosition);
 			
-			Vector3 moveDirection = Vehicle.Velocity.normalized;
-			Vector3 avoidance = Vector3.zero;
-			avoidance =	 OpenSteerUtility.perpendicularComponent(futurePosition, moveDirection);
-	
-			avoidance.Normalize();
+			Vector3 offset =  Vehicle.Position - futurePosition;
 		
-			avoidance += moveDirection * Vehicle.MaxForce * _avoidanceForceFactor;
+			var movement = futurePosition - Vehicle.Position;
+			Vector3 moveDirection = movement.normalized;
+			Vector3 avoidance = Vector3.zero;
+		
+		avoidance = Quaternion.AngleAxis(-10, Vector3.up) * movement;
+		
+		
+	//	avoidance =	 OpenSteerUtility.perpendicularComponent(movement, moveDirection);
+	
+	//		avoidance = avoidance.normalized * Vehicle.MaxForce * _avoidanceForceFactor;
+		
+			//avoidance += moveDirection * Vehicle.MaxForce * _avoidanceForceFactor;
 			
 			Debug.DrawLine(Vehicle.Position, Vehicle.Position + avoidance, Color.yellow);
 
