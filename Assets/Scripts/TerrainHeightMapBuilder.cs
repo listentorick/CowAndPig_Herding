@@ -98,12 +98,8 @@ public class TerrainHeightMapBuilder : MonoBehaviour {
 		
 		int index = sortedIndices[sortedIndices.Length-1];
 		
-		Debug.Log("index " + index + " " + flatHeights[0] );
-		
-		
-		
-		
-		
+
+		//Place 5000 trees (in the lowlands)		
 		for(int j=0;j<5000;j++){
 			
 			int i = rnd.Next(0,100000);
