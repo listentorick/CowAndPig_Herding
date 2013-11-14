@@ -3,5 +3,7 @@ using System.Collections;
 
 public interface IIsomentricCameraController {
 
-	void TranslateCamera (Transform camera);
+	Vector2 CalculateTranslation (Transform camera);
+	Vector2 CalculateRotation(Transform camera);
+	
 }
